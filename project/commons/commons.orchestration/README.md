@@ -38,7 +38,7 @@ This library contains all Project orchestration logic:
 
 ### Model
 
- **-** This package contains all Models (either called DTO) used in this Project.
+ **-** This package contains a `BaseModel` (either called DTO) used in this Project.
 
 <br>
 

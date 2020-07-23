@@ -1,12 +1,13 @@
 package com.rjdesenvolvimento.aries.access.orchestration.orchestration
 
+import com.rjdesenvolvimento.aries.access.orchestration.address.*
+import com.rjdesenvolvimento.aries.access.orchestration.employee.*
+import com.rjdesenvolvimento.aries.access.orchestration.legalperson.*
+import com.rjdesenvolvimento.aries.access.orchestration.person.*
+import com.rjdesenvolvimento.aries.access.orchestration.phone.*
 import com.rjdesenvolvimento.aries.commons.orchestration.language.*
 import com.rjdesenvolvimento.aries.commons.orchestration.model.*
-import com.rjdesenvolvimento.aries.commons.orchestration.model.address.*
-import com.rjdesenvolvimento.aries.commons.orchestration.model.employee.*
-import com.rjdesenvolvimento.aries.commons.orchestration.model.legalperson.*
-import com.rjdesenvolvimento.aries.commons.orchestration.model.person.*
-import com.rjdesenvolvimento.aries.commons.orchestration.model.phone.*
+
 import java.util.*
 
 data class Orchestration(
@@ -20,7 +21,10 @@ data class Orchestration(
   val address: Address?
 ) : BaseModel()
 
-fun copyOrchestrator(orchestration: Orchestration, uuid: UUID? = null): Orchestration {
+fun copyOrchestrator(
+  orchestration: Orchestration,
+  uuid: UUID? = null
+): Orchestration {
   val id = uuid ?: UUID.randomUUID()
   return orchestration.copy(
     id = id,
@@ -33,7 +37,10 @@ fun copyOrchestrator(orchestration: Orchestration, uuid: UUID? = null): Orchestr
   )
 }
 
-data class TargetClass(val target: String, val status: Boolean?)
+data class TargetClass(
+  val target: String,
+  val status: Boolean?
+)
 
 fun orchestrationValidator(language: Language, orchestration: Orchestration): List<String> {
   return listOfNotNull(

@@ -9,12 +9,12 @@ import com.rjdesenvolvimento.aries.access.consumer.settings.*
 import com.rjdesenvolvimento.aries.commons.kafka.enum.*
 import io.ktor.util.*
 import kotlinx.coroutines.*
-import org.jetbrains.exposed.exceptions.*
 import org.jetbrains.exposed.sql.transactions.experimental.*
 
 @KtorExperimentalAPI
 suspend fun insertConsumer(consumer: Consumer, schema: String): Any? = newSuspendedTransaction(Dispatchers.IO) {
   runCatching {
+    transaction(consumer = consumer, schema = schema, eventMethod = EventMethod.Insert)
     transaction(consumer = consumer, schema = schema, eventMethod = EventMethod.Insert)
   }.onSuccess {
     runCatching {

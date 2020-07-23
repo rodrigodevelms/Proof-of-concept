@@ -38,8 +38,9 @@ fun Application.module(testing: Boolean = false) {
 
   install(ContentNegotiation) {
     jackson {
+      enable(SerializationFeature.INDENT_OUTPUT)
       registerModules(KotlinModule(), JavaTimeModule())
-      jacksonObjectMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+      jacksonObjectMapper()
     }
   }
 

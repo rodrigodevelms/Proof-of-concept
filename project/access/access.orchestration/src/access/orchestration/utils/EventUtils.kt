@@ -19,7 +19,7 @@ class OrchestrationEvent<T>(
 
 @KtorExperimentalAPI
 suspend fun <T> OrchestrationEvent<T>.send() {
-  Producer(
+  KProducer(
     topic = environmentVariable(ev, "kafka.topic_name"),
     event = Event(
       id = id,

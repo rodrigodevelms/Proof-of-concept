@@ -11,7 +11,7 @@ import kotlinx.coroutines.*
 import org.apache.kafka.common.*
 import java.time.*
 
-class Consumer(
+class KConsumer(
   val topic: String,
   val bootstrapServers: String,
   val group: String,
@@ -20,7 +20,7 @@ class Consumer(
   val pollDuration: Long = 1000
 )
 
-suspend inline fun <reified T : Any> Consumer.consumeEvent(
+suspend inline fun <reified T : Any> KConsumer.consumeEvent(
   timeDelay: Long = 100,
   noinline callback: suspend (Event<T>) -> Unit
 ) {
@@ -70,7 +70,7 @@ suspend fun <T> publishResponse(
   isSuccess: Boolean,
   bootstrapServers: String
 ) {
-  Producer(
+  KProducer(
     topic = "response-$topic",
     event = responseEvent(
       event = event,

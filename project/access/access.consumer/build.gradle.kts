@@ -22,16 +22,10 @@ application {
 }
 
 repositories {
+  mavenLocal()
   jcenter()
   maven { url = uri("https://kotlin.bintray.com/ktor") }
   maven { url = uri("https://jitpack.io") }
-  maven {
-    url = uri(getProperty("artifactory_url"))
-    credentials {
-      username = getProperty("artifactory_user")
-      password = getProperty("artifactory_password")
-    }
-  }
 }
 
 dependencies {
@@ -94,17 +88,6 @@ publishing {
       }
     }
   }
-  repositories {
-    maven {
-      val releasesRepoUrl = uri(getProperty("artifactory_url"))
-      val snapshotsRepoUrl = uri("$releasesRepoUrl/snapshots")
-      url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-      credentials {
-        username = getProperty("artifactory_user")
-        password = getProperty("artifactory_password")
-      }
-    }
-  }
 }
 
 fun getProperty(propertyName: String): String =
@@ -121,5 +104,5 @@ flyway {
 tasks {
   compileKotlin { kotlinOptions.jvmTarget = "11" }
   compileTestKotlin { kotlinOptions.jvmTarget = "11" }
-  withType<io.gitlab.arturbosch.detekt.Detekt> { this.jvmTarget = "11"}
+  withType<io.gitlab.arturbosch.detekt.Detekt> { this.jvmTarget = "11" }
 }

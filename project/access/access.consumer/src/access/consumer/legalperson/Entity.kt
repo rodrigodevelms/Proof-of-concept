@@ -1,8 +1,6 @@
 package com.rjdesenvolvimento.aries.access.consumer.legalperson
 
-import com.fasterxml.jackson.databind.annotation.*
-import com.fasterxml.jackson.datatype.jsr310.deser.*
-import com.fasterxml.jackson.datatype.jsr310.ser.*
+import com.fasterxml.jackson.annotation.*
 import com.rjdesenvolvimento.aries.access.consumer.person.*
 import com.rjdesenvolvimento.aries.commons.consumer.entity.*
 import org.jetbrains.exposed.sql.*
@@ -16,8 +14,7 @@ data class LegalPerson(
   val companyName: String,
   val fancyName: String,
   val document: String,
-  @JsonSerialize(using = LocalDateSerializer::class)
-  @JsonDeserialize(using = LocalDateDeserializer::class)
+  @JsonFormat(pattern = "yyyy-MM-dd")
   val openingDate: LocalDate,
   val legalNature: LegalNature,
   val lineOfBusiness: String,

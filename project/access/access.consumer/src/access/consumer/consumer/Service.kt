@@ -14,12 +14,12 @@ const val GROUP = "access-domain-group"
 @KtorExperimentalAPI
 suspend inline fun serviceConsumer() {
   runCatching {
-    elasticStatus()
-    Consumer(
+    KConsumer(
       TOPIC_NAME,
       BOOTSTRAP_SERVER,
       GROUP
     ).consumeEvent { event: Event<Consumer> ->
+      elasticStatus()
       when (event.information.eventMethod) {
         EventMethod.Insert -> {
           insertConsumer(consumer = event.message, schema = event.request.schema)

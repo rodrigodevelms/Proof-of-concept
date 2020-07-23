@@ -1,8 +1,6 @@
 package com.rjdesenvolvimento.aries.access.consumer.employee
 
-import com.fasterxml.jackson.databind.annotation.*
-import com.fasterxml.jackson.datatype.jsr310.deser.*
-import com.fasterxml.jackson.datatype.jsr310.ser.*
+import com.fasterxml.jackson.annotation.*
 import com.rjdesenvolvimento.aries.access.consumer.person.*
 import com.rjdesenvolvimento.aries.commons.consumer.entity.*
 import org.jetbrains.exposed.sql.*
@@ -22,11 +20,9 @@ data class Contract(
   override val id: UUID,
   override val active: Boolean,
   val workRegime: WorkRegime,
-  @JsonSerialize(using = LocalDateSerializer::class)
-  @JsonDeserialize(using = LocalDateDeserializer::class)
+  @JsonFormat(pattern = "yyyy-MM-dd")
   val hiringDate: LocalDate,
-  @JsonSerialize(using = LocalDateSerializer::class)
-  @JsonDeserialize(using = LocalDateDeserializer::class)
+  @JsonFormat(pattern = "yyyy-MM-dd")
   val resignationDate: LocalDate?,
   val remuneration: BigDecimal,
   val role: String,

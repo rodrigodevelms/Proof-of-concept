@@ -1,16 +1,16 @@
 CREATE TABLE IF NOT EXISTS rjdesenvolvimento.address
 (
-    id          uuid         not null,
-    internal_Id bigserial    not null,
-    active      boolean      not null,
-    country     varchar(120) not null,
-    state       varchar(120) not null,
-    city        varchar(120) not null,
+    id           uuid         not null,
+    internal_Id  bigserial    not null,
+    active       boolean      not null,
+    country      varchar(120) not null,
+    state        varchar(120) not null,
+    city         varchar(120) not null,
     zip_code     varchar(15)  not null,
-    district    varchar(120) not null,
+    district     varchar(120) not null,
     public_place varchar(120) not null,
-    number      varchar(20)  not null,
-    complement  varchar(120) not null,
+    number       varchar(20)  not null,
+    complement   varchar(120) not null,
     person_fk    uuid         not null
 );
 

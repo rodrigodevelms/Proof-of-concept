@@ -12,6 +12,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.util.*
+import io.ktor.util.pipeline.*
 import java.util.*
 
 @KtorExperimentalAPI
@@ -20,12 +21,18 @@ fun Route.orchestration() {
     post {
       val taskId = UUID.randomUUID()
       val language = Language.valueOf(
-        isnullRequest(call.request.header("language"), Language.BR.toString())
+        isnullRequest(
+          request = call.request.header("language"),
+          isNull = Language.BR.toString()
+        )
       )
       runCatching {
         elasticStatus()
         val receive = (call.receive<Orchestration>())
-        val validation = orchestrationValidator(language = language, orchestration = receive)
+        val validation = orchestrationValidator(
+          language = language,
+          orchestration = receive
+        )
         if (validation.isEmpty()) {
           val id = UUID.randomUUID()
           OrchestrationEvent(
@@ -34,13 +41,34 @@ fun Route.orchestration() {
             eventMethod = EventMethod.Insert,
             room = "room",
             schema = "rjdesenvolvimento",
-            message = copyOrchestrator(orchestration = receive, uuid = id)
+            message = copyOrchestrator(
+              orchestration = receive,
+              uuid = id
+            )
           ).send()
+          val x = OrchestrationEvent(
+            id = id,
+            taskId = taskId,
+            eventMethod = EventMethod.Insert,
+            room = "room",
+            schema = "rjdesenvolvimento",
+            message = copyOrchestrator(
+              orchestration = receive,
+              uuid = id
+            )
+          )
           call.respond(
             status = HttpStatusCode.Accepted,
-            message = taskSuccessfullyProcessed(language, taskId)
+            message = x
+//            taskSuccessfullyProcessed(
+//              language = language,
+//              taskId = taskId
+//            )
           )
-          orchestrationRepository("rjdesenvolvimento", elkDuplicateTopicError(language))
+          orchestrationRepository(
+            schema = "rjdesenvolvimento",
+            errorMessage = elkDuplicateTopicError(language)
+          )
         } else {
           call.respond(
             status = HttpStatusCode.BadRequest,
@@ -147,4 +175,8 @@ fun Route.orchestration() {
       }
     }
   }
+}
+
+fun test(p: PipelineContext<Unit, ApplicationCall>) {
+  p.call
 }

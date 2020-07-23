@@ -22,16 +22,10 @@ application {
 }
 
 repositories {
+  mavenLocal()
   jcenter()
   maven { url = uri("https://kotlin.bintray.com/ktor") }
   maven { url = uri("https://jitpack.io") }
-  maven {
-    url = uri(getProperty("artifactory_url"))
-    credentials {
-      username = getProperty("artifactory_user")
-      password = getProperty("artifactory_password")
-    }
-  }
 }
 
 dependencies {
@@ -94,17 +88,6 @@ publishing {
             url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
           }
         }
-      }
-    }
-  }
-  repositories {
-    maven {
-      val releasesRepoUrl = uri(getProperty("artifactory_url"))
-      val snapshotsRepoUrl = uri("$releasesRepoUrl/snapshots")
-      url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-      credentials {
-        username = getProperty("artifactory_user")
-        password = getProperty("artifactory_password")
       }
     }
   }

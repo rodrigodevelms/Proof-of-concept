@@ -11,16 +11,10 @@ group = "com.rjdesenvolvimento.aries"
 version = "0.0.1"
 
 repositories {
+  mavenLocal()
   jcenter()
   maven { url = uri("https://kotlin.bintray.com/ktor") }
-  maven {
-    url = uri(getProperty("artifactory_url"))
-    credentials {
-      username = getProperty("artifactory_user")
-      password = getProperty("artifactory_password")
-    }
-  }
-}
+ }
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
@@ -69,18 +63,7 @@ publishing {
       }
     }
   }
-  repositories {
-    maven {
-      val releasesRepoUrl = uri(getProperty("artifactory_url"))
-      val snapshotsRepoUrl = uri("$releasesRepoUrl/snapshots")
-      url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-      credentials {
-        username = getProperty("artifactory_user")
-        password = getProperty("artifactory_password")
-      }
-    }
-  }
-}
+ }
 
 fun getProperty(propertyName: String): String =
   project.findProperty(propertyName).toString()

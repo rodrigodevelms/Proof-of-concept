@@ -1,6 +1,8 @@
 package com.rjdesenvolvimento.aries
 
 import com.fasterxml.jackson.databind.*
+import com.fasterxml.jackson.datatype.jsr310.*
+import com.fasterxml.jackson.module.kotlin.*
 import com.rjdesenvolvimento.aries.access.consumer.consumer.*
 import com.rjdesenvolvimento.aries.access.consumer.settings.*
 import com.rjdesenvolvimento.aries.commons.consumer.settings.*
@@ -22,6 +24,8 @@ fun Application.module(testing: Boolean = false) {
   install(ContentNegotiation) {
     jackson {
       enable(SerializationFeature.INDENT_OUTPUT)
+      registerModules(KotlinModule(), JavaTimeModule())
+      jacksonObjectMapper()
     }
   }
 

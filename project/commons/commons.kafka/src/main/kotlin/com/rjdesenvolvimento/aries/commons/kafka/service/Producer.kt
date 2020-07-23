@@ -8,7 +8,7 @@ import com.rjdesenvolvimento.aries.commons.patterns.io.*
 import org.apache.kafka.clients.producer.*
 import org.apache.kafka.common.*
 
-class Producer<T>(
+class KProducer<T>(
   val topic: String,
   val event: Event<T>,
   val bootstrapServers: String,
@@ -17,7 +17,7 @@ class Producer<T>(
   val batchSize: BatchSize = BatchSize.ThirtyTwo
 )
 
-suspend inline fun <T> Producer<T>.produceEvent() {
+suspend inline fun <T> KProducer<T>.produceEvent() {
   val producer = createProducer(
     bootstrapServers = bootstrapServers,
     retries = retries,

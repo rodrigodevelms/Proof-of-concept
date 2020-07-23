@@ -1,8 +1,6 @@
 package com.rjdesenvolvimento.aries.access.consumer.person
 
-import com.fasterxml.jackson.databind.annotation.*
-import com.fasterxml.jackson.datatype.jsr310.deser.*
-import com.fasterxml.jackson.datatype.jsr310.ser.*
+import com.fasterxml.jackson.annotation.*
 import com.rjdesenvolvimento.aries.access.consumer.phone.*
 import com.rjdesenvolvimento.aries.commons.consumer.entity.*
 import org.jetbrains.exposed.sql.*
@@ -16,8 +14,7 @@ data class Person(
   val name: String,
   val email: String,
   val document: String,
-  @JsonSerialize(using = LocalDateSerializer::class)
-  @JsonDeserialize(using = LocalDateDeserializer::class)
+  @JsonFormat(pattern = "yyyy-MM-dd")
   val birthdate: LocalDate,
   val maritalStatus: MaritalStatus,
   val gender: Gender,
