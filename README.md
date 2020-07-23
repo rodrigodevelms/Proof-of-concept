@@ -17,6 +17,7 @@
 ### STEPS
 
 
+- Do `gradlew publishToMavenLocal` on each commons lib.
 - `docker-compose up -d`
 - Open **localhost:9021** and create two topics: `access-domain` and `response-access-domain`
 - Start Orchestration API with `gradle run` 
