@@ -1,0 +1,263 @@
+swagger: "2.0"
+info:
+  version: 0.0.1
+  title: "Orchestration Access"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  description: "This is a sample CRUD Orchestration API."
+  termsOfService: "http://swagger.io/terms/"
+
+  contact:
+    name: "Rodrigo Batista"
+    url: "https://www.linkedin.com/in/rodrigo-batista-45b22787/"
+    email: "rodrigo_develms@hotmail.com"
+
+basePath: "/api/access/orchestrator"
+port:
+
+tags:
+  - name: "ORCHESTRATION"
+    description: "CRUD"
+    externalDocs:
+      description: "README.md"
+      url: "TODO"
+
+paths:
+  /:
+    post:
+      tags:
+        - "ORCHESTRATION"
+      summary: "You can add one of these objects: PERSON, PHONE, LEGAL PERSON, EMPLOYEE, ADDRESS. It is not necessary to pass all, only one is required"
+      description: "Insert one or multiples objects"
+      operationId: "postOrchestration"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "header"
+          description: "Select the language for the response and error messages"
+          required: true
+          type: string
+
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/Orchestration"
+
+          required: true
+          description: "Create a Orchestration message"
+
+      responses:
+        200:
+          $ref: "#/responses/Success"
+        400:
+          $ref: "#/responses/Error"
+        500:
+          $ref: "#/responses/Error"
+
+    put:
+      tags:
+        - "ORCHESTRATION"
+      summary: "Update one of the following objects: PERSON, PHONE, LEGAL PERSON, EMPLOYEE, ADDRESS"
+      description: "Update one or multiples objects"
+      operationId: "patchOrchestration"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "header"
+          description: "Select the language for the response and error messages"
+          required: true
+          type: string
+
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/Orchestration"
+
+          required: true
+          description: "Create a Orchestration message"
+
+      responses:
+        200:
+          $ref: "#/responses/Success"
+        400:
+          $ref: "#/responses/Error"
+        500:
+          $ref: "#/responses/Error"
+
+definitions:
+  Orchestration:
+    type: object
+    properties:
+      person:
+        $ref: "#/definitions/Person"
+      address:
+        $ref: "#/definitions/Address"
+      legalPerson:
+        $ref: "#/definitions/LegalPerson"
+      employee:
+        $ref: "#/definitions/Employee"
+      phone:
+        $ref: "#/definitions/Phone"
+
+  Person:
+    type: object
+    properties:
+      active:
+        type: boolean
+        default: true
+      name:
+        type: string
+      email:
+        type: string
+      document:
+        type: string
+      birthdate:
+        type: string
+        format: date
+      maritalStatus:
+        type: string
+        enum:
+          - "Single"
+          - "Married"
+          - "Divorced"
+          - "StableUnion"
+          - "Widower"
+          - "Uninformed"
+        default: "Uninformed"
+      gender:
+        type: string
+        enum:
+          - "Male"
+          - "Female"
+          - "Uninformed"
+        default: "Uninformed"
+      phones:
+        type: array
+        items:
+          $ref: "#/definitions/Phone"
+
+  Address:
+    type: object
+    properties:
+      active:
+        type: boolean
+        default: true
+      country:
+        type: string
+      state:
+        type: string
+      city:
+        type: string
+      zipCode:
+        type: string
+      district:
+        type: string
+      publicPlace:
+        type: string
+      number:
+        type: string
+      complement:
+        type: string
+
+  LegalPerson:
+    type: object
+    properties:
+      active:
+        type: boolean
+        default: true
+      companyName:
+        type: string
+      fancyName:
+        type: string
+      document:
+        type: string
+      openingDate:
+        type: string
+        format: date
+      legalNature:
+        type: string
+        enum:
+          - "PublicAdministration"
+          - "BusinessEntity"
+          - "NonProfitEntities"
+          - "ExtraterritorialInstitutions"
+        default: "BusinessEntity"
+      lineOfBusiness:
+        type: string
+
+  Employee:
+    type: object
+    properties:
+      active:
+        type: boolean
+        default: true
+      contract:
+        type: object
+        properties:
+          active:
+            type: boolean
+            default: true
+          workRegime:
+            type: string
+            enum:
+              - "Contract"
+              - "WorkLaws"
+            default: "Contract"
+          hiringDate:
+            type: string
+            format: date
+          resignationDate:
+            type: string
+            format: date
+          remuneration:
+            type: integer
+          role:
+            type: string
+          workday:
+            type: string
+            enum:
+              - "Daytime"
+              - "Nightly"
+            default: "Daytime"
+
+  Phone:
+    type: object
+    properties:
+      active:
+        type: boolean
+        default: true
+      idd:
+        type: string
+      ddd:
+        type: string
+      number:
+        type: string
+
+responses:
+  Success:
+    description: "When the Orchestration API successfully sends an event to Kafka"
+    schema:
+      type: string
+
+  Error:
+    description: "An error has occurred"
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        date:
+          type: string
+          format: date
+        errors:
+          type: array
+          items:
+            type: string

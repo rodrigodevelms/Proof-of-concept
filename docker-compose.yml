@@ -1,0 +1,142 @@
+version: "3.7"
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zookeeper
+    container_name: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    volumes:
+      - ./zookeeper-data:/var/lib/zookeeper/data
+      - ./zookeeper-datalog:/var/lib/zookeeper/log
+    networks:
+      - poc-net
+
+  broker:
+    image: confluentinc/cp-kafka:latest
+    hostname: broker
+    container_name: broker
+    restart: always
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      CONFLUENT_METRICS_ENABLE: "true"
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+    volumes:
+      - ./broker-data:/var/lib/kafka/data
+    networks:
+      - poc-net
+
+  #IF YOU USE CONDUKTOR OR ANOTHER KAFKA GUI, COMMENT ON THIS SERVICE
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:latest
+    hostname: control-center
+    container_name: control-center
+    restart: always
+    depends_on:
+      - zookeeper
+      - broker
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "broker:29092"
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
+    networks:
+      - poc-net
+
+  elasticsearch:
+    image: elasticsearch:7.7.1
+    hostname: elasticsearch
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - poc-net
+    volumes:
+      - ./elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      node.name: "elasticsearch_one"
+      cluster.name: "es-docker-cluster"
+      discovery.seed_hosts: "elasticsearch_one"
+      cluster.initial_master_nodes: "elasticsearch_one"
+      xpack.security.transport.ssl.enabled: "true"
+      bootstrap.memory_lock: "true"
+      http.cors.allow-origin: "*"
+      xpack.security.enabled: "true"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ELASTIC_USERNAME: "elastic"
+      ELASTIC_PASSWORD: "yR!DA5g2ZbW-^k-r-f6qBL&J+yA%g39Y"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    image: kibana:7.7.1
+    hostname: kibana
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - poc-net
+    environment:
+      SERVER_PORT: "5601"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+      XPACK_SECURITY_ENABLED: "true"
+      XPACK_MONITORING_ENABLED: "true"
+      XPACK_MONITORING_COLLECTION_ENABLED: "true"
+      xpack.security.encryptionKey: "Lrw7pDvTqzLATEDXK&b6C3_jtP-v&deuL+mdzwC*"
+      ELASTICSEARCH_USERNAME: "elastic"
+      ELASTICSEARCH_PASSWORD: "yR!DA5g2ZbW-^k-r-f6qBL&J+yA%g39Y"
+    depends_on:
+      - elasticsearch
+
+  postgres-kt-access:
+    image: debezium/postgres:12-alpine
+    hostname: postgres-kt-access
+    container_name: postgres-kt-access
+    restart: always
+    ports: 
+      - "5432:5432"
+    networks:
+      - poc-net      
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "+c_5q!U-*zEWLLekD!vuK3mZ7LZ9ASuT"
+      POSTGRES_DB: "access_domain"
+      PGPORT: 5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+networks:
+  poc-net:
+    driver: bridge
+    name: "poc-net"
+
+volumes:
+  broker-data:
+  zookeeper-data:
+  zookeeper-datalog:
+  elasticsearch:
+  postgres:
