@@ -1,0 +1,34 @@
+ch.qos.logback:logback-classic
+               ^^^^^^^^^^^^^^^
+
+org.jetbrains.exposed:exposed-*
+              ^^^^^^^
+
+org.flywaydb:flyway-*
+             ^^^^^^^^
+
+org.postgresql:postgresql
+               ^^^^^^^^^^
+
+com.zaxxer:HikariCP
+           ^^^^^^^^
+
+com.fasterxml.jackson.datatype:jackson-*
+                               ^^^^^^^^^
+
+com.github.jillesvangurp:es-kotlin-wrapper-client
+                         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+org.apache.kafka:*
+           ^^^^^
+
+org.junit.jupiter:junit-jupiter-engine
+                  ^^^^^^^^^^^^^^^^^^^^
+
+com.apurebase:kgraphql
+              ^^^^^^^^
+
+io.mockk:mockk
+         ^^^^^
+
+

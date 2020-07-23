@@ -1,8 +1,9 @@
 plugins {
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.serialization") version "1.3.72" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.10.0" apply false
-    id("org.flywaydb.flyway") version "6.4.4" apply false
+    kotlin("jvm")
+    kotlin("plugin.serialization") apply false
+    id("com.github.johnrengelman.shadow") apply false
+    id("io.gitlab.arturbosch.detekt") apply false
+    id("org.flywaydb.flyway") apply false
     `maven-publish`
 }
 

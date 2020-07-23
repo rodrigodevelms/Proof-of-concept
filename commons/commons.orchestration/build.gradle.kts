@@ -16,13 +16,12 @@ repositories {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
+  implementation(kotlin("stdlib-jdk8", "_"))
 
-//  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesTestVersion")
   testImplementation(project(":commons:commons.test"))
 
-  api("com.apurebase:kgraphql:$kGraphQLVersion")
-  api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$dataTypeVersion")
+  api("com.apurebase:kgraphql:_")
+  api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:_")
 }
 
 detekt {

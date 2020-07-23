@@ -16,10 +16,9 @@ repositories {
  }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinVersion")
+  implementation(kotlin("stdlib-jdk8", "_"))
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 
-//  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesTestVersion")
   testImplementation(project(":commons:commons.test"))
 }
 

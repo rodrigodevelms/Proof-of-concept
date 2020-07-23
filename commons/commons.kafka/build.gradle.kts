@@ -1,9 +1,3 @@
-val kafkaVersion = "2.5.0"
-val ktorVersion = "1.3.2"
-val kotlinCoroutineVersion = "1.3.7"
-val ariesPatternsVersion = "0.0.1"
-val ariesTestVersion = "0.0.1"
-
 plugins {
   kotlin("jvm")
   id("io.gitlab.arturbosch.detekt")
@@ -21,16 +15,14 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("org.apache.kafka:connect-json:$kafkaVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion")
-//  implementation("com.rjdesenvolvimento.aries:commons.patterns:$ariesPatternsVersion")
+  implementation("org.apache.kafka:connect-json:_")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
   implementation(project(":commons:commons.patterns"))
 
-//  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesTestVersion")
   testImplementation(project(":commons:commons.test"))
 
-  api("io.ktor:ktor-jackson:$ktorVersion")
-  api("org.apache.kafka:kafka-clients:$kafkaVersion")
+  api("io.ktor:ktor-jackson:_")
+  api("org.apache.kafka:kafka-clients:_")
 }
 
 detekt {

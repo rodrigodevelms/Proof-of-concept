@@ -1,7 +1,3 @@
-val kotlinElkVersion = "1.0-X-Beta-6-7.8.0"
-val ariesPatternsVersion = "0.0.1"
-val ariesTestVersion = "0.0.1"
-
 plugins {
   kotlin("jvm")
   id("io.gitlab.arturbosch.detekt")
@@ -17,13 +13,11 @@ repositories {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
-//  implementation("com.rjdesenvolvimento.aries:commons.patterns:$ariesPatternsVersion")
+  implementation(kotlin("stdlib-jdk8", "_"))
   implementation(project(":commons:commons.patterns"))
 
-  api("com.github.jillesvangurp:es-kotlin-wrapper-client:$kotlinElkVersion")
+  api("com.github.jillesvangurp:es-kotlin-wrapper-client:_")
 
-//  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesTestVersion")
   testImplementation(project(":commons:commons.test"))
 }
 
