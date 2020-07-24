@@ -1,15 +1,8 @@
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val airesCommonsOrchestrationVersion: String by project
-val ariesCommonsKafkaVersion: String by project
-val ariesCommonsTestVersion: String by project
-val ariesCommonsElkVersion: String by project
-
 plugins {
   application
   kotlin("jvm")
   kotlin("plugin.serialization")
+  id("com.github.johnrengelman.shadow")
   id("io.gitlab.arturbosch.detekt")
   `maven-publish`
 }
@@ -29,24 +22,20 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-  implementation("ch.qos.logback:logback-classic:$logbackVersion")
-  implementation("io.ktor:ktor-server-netty:$ktorVersion")
+  implementation(kotlin("stdlib-jdk8", "_"))
+  implementation("ch.qos.logback:logback-classic:_")
+  implementation("io.ktor:ktor-server-netty:_")
 
-  implementation("io.ktor:ktor-metrics:$ktorVersion")
-  implementation("io.ktor:ktor-server-core:$ktorVersion")
-  implementation("io.ktor:ktor-auth:$ktorVersion")
-  implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
+  implementation("io.ktor:ktor-metrics:_")
+  implementation("io.ktor:ktor-server-core:_")
+  implementation("io.ktor:ktor-auth:_")
+  implementation("io.ktor:ktor-auth-jwt:_")
 
-//  implementation("com.rjdesenvolvimento.aries:commons.orchestration:airesCommonsOrchestrationVersion")
   implementation(project(":commons:commons.orchestration"))
-//  implementation("com.rjdesenvolvimento.aries:commons.kafka:$ariesCommonsKafkaVersion")
   implementation(project(":commons:commons.kafka"))
-//  implementation("com.rjdesenvolvimento.aries:commons.elasticsearch:$ariesCommonsElkVersion")
   implementation(project(":commons:commons.elasticsearch"))
 
-  testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
-//  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesCommonsTestVersion")
+  testImplementation("io.ktor:ktor-server-tests:_")
   testImplementation(project(":commons:commons.test"))
 }
 

@@ -1,14 +1,7 @@
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val ariesCommonsKafkaVersion: String by project
-val ariesCommonsConsumerVersion: String by project
-val ariesCommonsTestVersion: String by project
-val ariesCommonsElkVersion: String by project
-
 plugins {
   application
   kotlin("jvm")
+  id("com.github.johnrengelman.shadow")
   id("org.flywaydb.flyway")
   id("io.gitlab.arturbosch.detekt")
   `maven-publish`
@@ -29,20 +22,16 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-  implementation("ch.qos.logback:logback-classic:$logbackVersion")
-  implementation("io.ktor:ktor-server-netty:$ktorVersion")
-  implementation("io.ktor:ktor-server-core:$ktorVersion")
-  implementation("io.ktor:ktor-jackson:$ktorVersion")
-//  implementation("com.rjdesenvolvimento.aries:commons.consumer:$ariesCommonsConsumerVersion")
+  implementation(kotlin("stdlib-jdk8", "_"))
+  implementation("ch.qos.logback:logback-classic:_")
+  implementation("io.ktor:ktor-server-netty:_")
+  implementation("io.ktor:ktor-server-core:_")
+  implementation("io.ktor:ktor-jackson:_")
   implementation(project(":commons:commons.consumer"))
-//  implementation("com.rjdesenvolvimento.aries:commons.kafka:$ariesCommonsKafkaVersion")
   implementation(project(":commons:commons.kafka"))
-//  implementation("com.rjdesenvolvimento.aries:commons.elasticsearch:$ariesCommonsElkVersion")
   implementation(project(":commons:commons.elasticsearch"))
 
-  testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
-//  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesCommonsTestVersion")
+  testImplementation("io.ktor:ktor-server-tests:_")
   testImplementation(project(":commons:commons.test"))
 }
 

@@ -1,12 +1,3 @@
-val postgresVersion = "42.2.14"
-val hikariCpVersion = "3.4.5"
-val flywayVersion = "6.4.4"
-val ktorServerVersion = "1.3.1"
-val exposedVersion = "0.25.1"
-val kotlinVersion = "0.20.0"
-val jacksonDataTypeVersion = "2.10.3"
-val ariesCommonsTestVersion = "0.0.1"
-
 plugins {
   kotlin("jvm")
   id("io.gitlab.arturbosch.detekt")
@@ -21,18 +12,17 @@ repositories {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
-  implementation("org.postgresql:postgresql:$postgresVersion")
-  implementation("com.zaxxer:HikariCP:$hikariCpVersion")
-  implementation("org.flywaydb:flyway-core:$flywayVersion")
-  implementation("io.ktor:ktor-server-core:$ktorServerVersion")
-  implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+  implementation(kotlin("stdlib-jdk8", "_"))
+  implementation("org.postgresql:postgresql:_")
+  implementation("com.zaxxer:HikariCP:_")
+  implementation("org.flywaydb:flyway-core:_")
+  implementation("io.ktor:ktor-server-core:_")
+  implementation("org.jetbrains.exposed:exposed-jdbc:_")
 
-  api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion")
-  api("org.jetbrains.exposed:exposed-core:$exposedVersion")
-  api("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+  api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:_")
+  api("org.jetbrains.exposed:exposed-core:_")
+  api("org.jetbrains.exposed:exposed-java-time:_")
 
-  //  testImplementation("com.rjdesenvolvimento.aries:commons.test:$ariesCommonsTestVersion")
   testImplementation(project(":commons:commons.test"))
 }
 

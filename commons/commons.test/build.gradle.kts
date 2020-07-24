@@ -1,7 +1,3 @@
-val jupiterVersion = "5.6.2"
-val logbackVersion = "1.2.3"
-val mockkVersion = "1.10.0"
-
 plugins {
   kotlin("jvm")
   `maven-publish`
@@ -16,13 +12,13 @@ repositories {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
+  implementation(kotlin("stdlib-jdk8", "_"))
 
-  api("ch.qos.logback:logback-classic:$logbackVersion")
-  api("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
-  api("org.jetbrains.kotlin:kotlin-test")
-  api("org.jetbrains.kotlin:kotlin-test-junit5")
-  api("io.mockk:mockk:$mockkVersion")
+  api("ch.qos.logback:logback-classic:_")
+  api("org.junit.jupiter:junit-jupiter-engine:_")
+  api("org.jetbrains.kotlin:kotlin-test:_")
+  api("org.jetbrains.kotlin:kotlin-test-junit5:_")
+  api("io.mockk:mockk:_")
 }
 
 
